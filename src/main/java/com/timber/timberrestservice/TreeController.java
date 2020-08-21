@@ -23,6 +23,11 @@ public class TreeController {
     @GetMapping("/tree")
     public String attackForm(Model model) {
         model.addAttribute("node", new StringNode());
+
+        List<String> allAttacks = practiceTree.getChildren();
+        allAttacks.remove(0); // removes "child" label
+        model.addAttribute("attacks", allAttacks);
+
         return "tree";
     }
 
@@ -30,6 +35,8 @@ public class TreeController {
     public String attackSubmit(@ModelAttribute StringNode node, Model model) {
         model.addAttribute("node", node);
         practiceTree.addStringNode(node);
+
         return "tree";
     }
+
 }

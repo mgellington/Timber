@@ -36,6 +36,15 @@ public class PracticeTree {
         return stringNodes;
     }
 
+    public List<String> getChildren() {
+        List<String> children = new ArrayList<String>();
+        for (StringNode node : stringNodes) {
+            children.add(node.getChild());
+        }
+
+        return children;
+    }
+
     public void addStringNode(StringNode sn) {
         stringNodes.add(sn);
     }

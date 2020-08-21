@@ -9,6 +9,7 @@ d3.json("http://localhost:8080/node", function(error, json) {
 
     var links = d3.csvParse(csv);
 
+    // list of all attacks
     var labels = links.map(l => `${[l[links.columns[0]]]}`);
 
     var svg = d3.select('svg')
@@ -64,6 +65,21 @@ function ConvertToCSV(objArray) {
     return str;
 }
 
+// // Drop Down Menu
+// // in html: <select id="selectParent"></select>
+// function dropDown(labels) {
+
+//     var select = document.getElementById("selectParent");
+
+//     for (var i = 0; i < labels.length; i++) {
+//         var current = labels[i];
+//         var el = document.createElement("option");
+//         el.textContent = current;
+//         el.value = current;
+//         select.appendChild(el);
+//     }
+// }
+
 
 
 
@@ -85,9 +101,9 @@ function createHierarchicalTree(links) {
         open_icon: "<span>&#9698;</span>",
         close_icon: "<span>&#9654;</span>"
     });
+
+    // var parent = findParent(tree);
 }
-
-
 
 
 
@@ -106,54 +122,28 @@ function findChildren(links, rootNode) {
 
 }
 
+// function findParent(tree) {
+//     var selected = tree.getSelectedNodes();
+//     if (selected.length > 1) {
+//         console.log("too many. put some back.")
+//     }
+//     else if (selected.length < 1) {
+//         console.log("there's nothing there??")
+//     }
+//     else {
+//         return selected[0];
+//     }
+// }
+
 
 
 
 function openForm() {
     document.getElementById("myForm").style.display = "block";
-    //window.open("localhost:8080/form", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
 }
   
 function closeForm() {
     document.getElementById("myForm").style.display = "none";
 }
 
-// function storeNewAttack() {
-//     console.log("here");
-//     var x = document.getElementById("frm1");
-//     var text = "";
-//     var i;
-//     for (i = 0; i < x.length; i++) {
-//         text += x.elements[i].value + "<br>";
-//     }
-//     document.getElementById("info").innerHTML = text;
-// }
 
-
-// function includeHTML() {
-//     var z, i, elmnt, file, xhttp;
-//     /* Loop through a collection of all HTML elements: */
-//     z = document.getElementsByTagName("*");
-//     for (i = 0; i < z.length; i++) {
-//       elmnt = z[i];
-//       /*search for elements with a certain atrribute:*/
-//       file = elmnt.getAttribute("w3-include-html");
-//       if (file) {
-//         /* Make an HTTP request using the attribute value as the file name: */
-//         xhttp = new XMLHttpRequest();
-//         xhttp.onreadystatechange = function() {
-//           if (this.readyState == 4) {
-//             if (this.status == 200) {elmnt.innerHTML = this.responseText;}
-//             if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
-//             /* Remove the attribute, and call this function once more: */
-//             elmnt.removeAttribute("w3-include-html");
-//             includeHTML();
-//           }
-//         }
-//         xhttp.open("GET", file, true);
-//         xhttp.send();
-//         /* Exit the function: */
-//         return;
-//       }
-//     }
-//   }
