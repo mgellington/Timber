@@ -1,0 +1,42 @@
+/* Global styles */
+
+@font-face {
+    font-family: hacked;
+    src: url(fonts/hacked-kerx.ttf);
+}
+
+body {
+    margin: 0;
+    font-family: sans-serif;
+    font-size: 21px;
+    background-color: rgb(30, 30, 30);
+    color: limegreen;
+}
+
+
+/* Typography */
+
+h1 {
+    font-family: hacked;
+    font-size: 40px;
+    margin: 0 10px;
+}
+
+h6 {
+    font-size: 12px;
+    margin: 0 10px;
+}
+
+/* Layout */
+
+header {
+    background-color: black;
+    color: limegreen;
+    padding: 10px 10px;
+    height: 60px;
+    
+}
+
+.main {
+    display: flex;
+}
