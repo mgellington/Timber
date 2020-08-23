@@ -1,3 +1,4 @@
+// D3 SVG GRAPH
 var svgWidth = 850, svgHeight = 400;
 
 d3.json("http://localhost:8080/node", function(error, json) {
@@ -65,21 +66,6 @@ function ConvertToCSV(objArray) {
     return str;
 }
 
-// // Drop Down Menu
-// // in html: <select id="selectParent"></select>
-// function dropDown(labels) {
-
-//     var select = document.getElementById("selectParent");
-
-//     for (var i = 0; i < labels.length; i++) {
-//         var current = labels[i];
-//         var el = document.createElement("option");
-//         el.textContent = current;
-//         el.value = current;
-//         select.appendChild(el);
-//     }
-// }
-
 
 
 
@@ -121,19 +107,6 @@ function findChildren(links, rootNode) {
     }
 
 }
-
-// function findParent(tree) {
-//     var selected = tree.getSelectedNodes();
-//     if (selected.length > 1) {
-//         console.log("too many. put some back.")
-//     }
-//     else if (selected.length < 1) {
-//         console.log("there's nothing there??")
-//     }
-//     else {
-//         return selected[0];
-//     }
-// }
 
 
 
