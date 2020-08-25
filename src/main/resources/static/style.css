@@ -61,39 +61,58 @@ header {
 
 .svg-container {
     width: 850px;
-    height: 400px;
+    height: 350px;
     background-color: black;
 }
 
+.button-container {
+    width: 850px;
+    height: 100px;
+}
+
 /* Button used to open add attack form */
-.add-attack-button {
+.add-attack-button, .capec-search-button, .delete-button {
     background-color: white;
     color: black;
     padding: 16px 20px;
     border: none;
     cursor: pointer;
     opacity: 0.8;
-    position: fixed;
-    bottom: 23px;
-    right: 28px;
-    width: 280px;
+    width: 275px;
+    display: inline-block;
+    margin-left: 3px;
 }
+
+/* .capec-search-button {
+    background-color: white;
+    color: black;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    position: fixed;
+    opacity: 0.8;
+    width: 280px;
+} */
 
 /* The popup form - hidden by default */
 .form-popup {
     display: none;
     position: fixed;
-    bottom: 0;
-    right: 15px;
-    border: 3px solid #f1f1f1;
-    z-index: 9;
+    z-index: 1;
+    overflow: auto;
+    top: 50%;
+    left: 50%;
+    margin: -150px 0 0 -150px;
 }
   
   /* Add styles to the form container */
 .form-container {
     max-width: 300px;
-    padding: 10px;
-    background-color: rgb(29, 29, 29);
+    padding: 20px;
+    background-color: rgb(25, 25, 25);
+    border: 3px solid #f1f1f1;
+
 }
   
   /* Full-width input fields */

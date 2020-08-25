@@ -2,6 +2,7 @@ package com.timber.timberrestservice;
 
 
 public class Attack {
+    public int capecID;
     public String name;
     public boolean isRoot;
     public boolean isBest;

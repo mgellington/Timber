@@ -119,4 +119,20 @@ function closeForm() {
     document.getElementById("myForm").style.display = "none";
 }
 
+function openCapecForm() {
+    document.getElementById("capecForm").style.display = "block";
+}
+  
+function closeCapecForm() {
+    document.getElementById("capecForm").style.display = "none";
+}
+
+function openDeleteForm() {
+    document.getElementById("deleteForm").style.display = "block";
+}
+
+function closeDeleteForm() {
+    document.getElementById("deleteForm").style.display = "none";
+}
+
 
