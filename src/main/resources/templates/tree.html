@@ -30,15 +30,15 @@
                         
                 </div>
 
+                <!-- INFO BOX -->
                 <div class = "column">
                     <div id = "container">
                     </div>
-                    <!-- <button class = "add-attack-button" type = "button" onclick="openForm()">Add Attack</button> -->
                 </div>
 
                 <div class = "column"></div>
 
-                <div class="form-popup" id="myForm">
+                    <div class="form-popup" id="myForm">
 
                     <!-- ADD CUSTOM ATTACK -->
                     <form action="#" th:action="@{/tree}" th:object="${node}" method="post" class="form-container" id="frm1">
@@ -57,23 +57,38 @@
                   </div>
 
                   <!-- ADD CAPEC ATTACK PATTERN -->
+
                   <div class="form-popup" id="capecForm">
 
                     <form action="#" th:action="@{/tree}" th:object="${node}" method="post" class="form-container" id="frm1">
-                        <h4>Search CAPEC library of known attack patterns</h4>
+                        <h4>Select Domain of Attack</h4>
                         <p>Domain: 
                             <select th:field="*{parent}">
-                                <option th:each="i : ${attacks}" th:value="${i}" th:text="${i}">
+                                <option th:each="i : ${categories}" th:value="${i}" th:text="${i}">
                                 </option>
                             </select>
                         </p>
-                
-                        <p>Attack: <input type="text" th:field="*{child}" /></p>
                         <button type="submit" class="btn">Add</button>
                         <button type="button" class="btn cancel" onclick="closeCapecForm()">Close</button>
                     </form>
                 
                   </div>
+
+                  <!-- <div class="form-popup" id="capecForm">
+
+                    <form action="#" th:action="@{/tree}" th:object="${node}" method="post" class="form-container" id="frm1">
+                        <h4>Search CAPEC library of known attack patterns</h4>
+                        <p>Domain: 
+                            <select th:field="*{child}">
+                                <option th:each="i : ${members}" th:value="${i}" th:text="${i}">
+                                </option>
+                            </select>
+                        </p>
+                        <button type="submit" class="btn">Add</button>
+                        <button type="button" class="btn cancel" onclick="closeCapecForm()">Close</button>
+                    </form>
+                
+                  </div> -->
 
                   <!-- DELETE ATTACK -->
                   <div class="form-popup" id="deleteForm">

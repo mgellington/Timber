@@ -109,6 +109,26 @@ function findChildren(links, rootNode) {
 }
 
 
+// // AJAX REQUEST - CATEGORY/MEMBER DROP DOWNS
+// function sendAjaxRequest() {
+//     var category = $("#category").val();
+//     $.get("/members?category=" + category, function(data) {
+//         $("#member").empty();
+//         data.forEach(function(item, i) {
+//             var option = "<option value= " + item + ">" + item + "</option>";
+//             $("#member").append(option);
+//         });
+//     });
+// };
+
+// // uses sendAjaxRequest when changing category drop down
+// $(document).ready(function() {
+//     $("$category").change(function() {
+//         sendAjaxRequest();
+//     });
+// });
+
+
 
 
 function openForm() {

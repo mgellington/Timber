@@ -13,6 +13,13 @@ public class Attack {
         isBest = false;
     }
 
+    public Attack (String name, int capecID) {
+        this.name = name;
+        this.capecID = capecID;
+        isRoot = false;
+        isBest = false;
+    }
+
 
     public String toString() {
         return name;
