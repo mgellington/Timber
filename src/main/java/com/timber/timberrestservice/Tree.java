@@ -15,7 +15,7 @@ public class Tree {
 
     public void assignRoot(Attack attack) {
         root = attack;
-        attack.setIsRoot(true);
+        // attack.setIsRoot(true);
     }
 
     public void addAttack(Attack attack) {
