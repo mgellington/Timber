@@ -76,7 +76,6 @@ function createHierarchicalTree(links) {
     var root = rootObject.map(([source, target]) => {
         return target;
     });
-    console.log(root + "");
     var rootNode = new TreeNode(root + ""); 
     findChildren(links, rootNode);
 
@@ -109,24 +108,33 @@ function findChildren(links, rootNode) {
 }
 
 
-// // AJAX REQUEST - CATEGORY/MEMBER DROP DOWNS
-// function sendAjaxRequest() {
-//     var category = $("#category").val();
-//     $.get("/members?category=" + category, function(data) {
-//         $("#member").empty();
-//         data.forEach(function(item, i) {
-//             var option = "<option value= " + item + ">" + item + "</option>";
-//             $("#member").append(option);
-//         });
-//     });
-// };
+// AJAX REQUEST - CATEGORY/MEMBER DROP DOWNS
+function sendAjaxRequest() {
+    var category = $("#category").val();
+    $.getJSON("http://localhost:8080/members", function(data) {
+        $("#member").empty();
+            data.forEach(function(item, i) {
+                if (item.name == category) {
+                    var members = item.members;
+                    members.forEach(function(item, i) {
+                        var option = `<option value= "${item}"> ${item} </option>`;
+                        $("#member").append(option);
+                    })
+                }
+                
+            });
 
-// // uses sendAjaxRequest when changing category drop down
-// $(document).ready(function() {
-//     $("$category").change(function() {
-//         sendAjaxRequest();
-//     });
-// });
+
+    });
+    
+};
+
+// JQuery - uses sendAjaxRequest when changing category drop down
+$(document).ready(function() {
+    $("#domain-button").click(function() {
+        sendAjaxRequest();
+    });
+});
 
 
 
@@ -139,8 +147,17 @@ function closeForm() {
     document.getElementById("myForm").style.display = "none";
 }
 
+function openDomainForm() {
+    document.getElementById("domainForm").style.display = "block";
+}
+
+function closeDomainForm() {
+    document.getElementById("domainForm").style.display = "close";
+}
+
 function openCapecForm() {
     document.getElementById("capecForm").style.display = "block";
+    closeDomainForm();
 }
   
 function closeCapecForm() {

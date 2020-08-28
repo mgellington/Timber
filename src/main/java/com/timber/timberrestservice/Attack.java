@@ -1,23 +1,23 @@
 package com.timber.timberrestservice;
 
+import java.util.ArrayList;
+import java.util.List;
 
 public class Attack {
     public int capecID;
     public String name;
-    public boolean isRoot;
-    public boolean isBest;
+    public List<String> suggestedChildren;
 
     public Attack (String name) {
         this.name = name;
-        isRoot = false;
-        isBest = false;
+        this.capecID = 0;
+        suggestedChildren = new ArrayList<String>();
     }
 
     public Attack (String name, int capecID) {
         this.name = name;
         this.capecID = capecID;
-        isRoot = false;
-        isBest = false;
+        suggestedChildren = new ArrayList<String>();
     }
 
 
@@ -33,19 +33,16 @@ public class Attack {
         this.name = newName;
     }
 
-    public boolean getIsRoot() {
-        return isRoot;
+    public int getCapecID() {
+        return capecID;
     }
 
-    public void setIsRoot(boolean isRoot) {
-        this.isRoot = isRoot;
+    public List<String> getSuggestedChildren() {
+        return suggestedChildren;
     }
 
-    public boolean getIsBest() {
-        return isBest;
+    public void addSuggestedChild(String child) {
+        suggestedChildren.add(child);
     }
 
-    public void setIsBest(boolean isBest) {
-        this.isBest = isBest;
-    }
 }

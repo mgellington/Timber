@@ -19,7 +19,7 @@
                         <svg class = svg-container></svg>
                         <div id = "button-container">
                             <button class = "add-attack-button" type = "button" onclick="openForm()">Add custom attack</button>
-                            <button class="capec-search-button" type = "button" onclick="openCapecForm()">Add attack from CAPEC attack patterns</button>
+                            <button class="capec-search-button" type = "button" onclick="openDomainForm()">Add attack from CAPEC attack patterns</button>
                             <button class="delete-button" type= "button" onclick="openDeleteForm()">Delete Attack</button>
                         </div>
                     </div>
@@ -58,14 +58,35 @@
 
                   <!-- ADD CAPEC ATTACK PATTERN -->
 
+                  <div class="form-popup" id="domainForm">
+
+                    <form action="#" th:action="@{/tree}" th:object="${memberFinder}" method="post" class="form-container" id="frm1">
+                        <h4>Select Domain of Attack</h4>
+                        <p>Domain: 
+                            <select th:field="*{category}" id="category">
+                                <option th:each="i : ${categories}" th:value="${i}" th:text="${i}">
+                                </option>
+                            </select>
+                        </p>
+                        <button type="button" class="btn" id="domain-button" onclick="openCapecForm()">Confirm Domain Selection</button>
+                        <button type="button" class="btn cancel" onclick="closeDomainForm()">Close</button>
+                        
+                    </form>
+                
+                  </div>
+
                   <div class="form-popup" id="capecForm">
 
                     <form action="#" th:action="@{/tree}" th:object="${node}" method="post" class="form-container" id="frm1">
-                        <h4>Select Domain of Attack</h4>
-                        <p>Domain: 
+                        <h4>Search CAPEC library of known attack patterns</h4>
+                        <p>Parent Attack: 
                             <select th:field="*{parent}">
-                                <option th:each="i : ${categories}" th:value="${i}" th:text="${i}">
+                                <option th:each="i : ${attacks}" th:value="${i}" th:text="${i}">
                                 </option>
+                            </select>
+                        </p>
+                        <p>Attack: 
+                            <select th:field="*{child}" id="member">
                             </select>
                         </p>
                         <button type="submit" class="btn">Add</button>
@@ -73,22 +94,6 @@
                     </form>
                 
                   </div>
-
-                  <!-- <div class="form-popup" id="capecForm">
-
-                    <form action="#" th:action="@{/tree}" th:object="${node}" method="post" class="form-container" id="frm1">
-                        <h4>Search CAPEC library of known attack patterns</h4>
-                        <p>Domain: 
-                            <select th:field="*{child}">
-                                <option th:each="i : ${members}" th:value="${i}" th:text="${i}">
-                                </option>
-                            </select>
-                        </p>
-                        <button type="submit" class="btn">Add</button>
-                        <button type="button" class="btn cancel" onclick="closeCapecForm()">Close</button>
-                    </form>
-                
-                  </div> -->
 
                   <!-- DELETE ATTACK -->
                   <div class="form-popup" id="deleteForm">
@@ -114,6 +119,7 @@
             <script src = "http://d3js.org/d3.v4.min.js"></script>
             <script src="https://unpkg.com/@hpcc-js/wasm@0.3.11/dist/index.min.js"></script>
             <script src="https://unpkg.com/d3-graphviz@3.0.5/build/d3-graphviz.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
             <script src = "index.js"></script>
         </body>
 

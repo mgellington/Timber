@@ -19,6 +19,12 @@ public class Category {
 
     }
 
+    // public Category(String name) {
+    //     // this.id = 0;
+    //     this.name = name;
+    //     this.members = new ArrayList<String>();
+    // }
+
     public void addMember(String id) {
         // Integer fancyId = (Integer) id;
         // members.add(fancyId);
@@ -46,7 +52,7 @@ public class Category {
     }
 
     public String toString() {
-        return id + " " + name;
+        return name;
     }
 
 

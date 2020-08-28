@@ -5,35 +5,54 @@ import java.util.List;
 
 public class MemberFinder {
     
-    private Category category;
-    private List<Category> listOfCategories;
+    private String category;
+    private List<String> members;
 
-    public MemberFinder(Category category) {
-        this.category = category;
-        XMLService xmlService = new XMLService();
-        this.listOfCategories = xmlService.parseCategory();
-    }
-
-    // public List<String> getMembers() {
-
-    //     List<String> members = new ArrayList<String>();
-
-    //     for (Category cat: listOfCategories) {
-    //         if (cat.equals(category)) {
-    //             members = cat.getMembers();
-    //         }
-    //     }
-
-    //     return members;
+    // public MemberFinder(Category category) {
+    //     this.category = category;
     // }
 
-    public Category getCategory() {
+    public MemberFinder(String catString) {
+        this.category = catString;
+        XMLService xmlService = new XMLService();
+        List<Category> categories = xmlService.parseCategory();
+        for (Category cat : categories) {
+            if (cat.getName().equals(catString)) {
+                members = cat.getMembers();
+            }
+        }
+    }
+
+    public MemberFinder() {
+        this.category = "";
+    }
+
+    public List<String> getMembers() {
+
+        // List<String> members = category.getMembers();
+
+        return members;
+    }
+
+    public String getCategory() {
         return category;
     }
     
-    public void setCategory(Category c) {
+    public void setCategory(String c) {
         this.category = c;
     }
+
+    // public void setCategory(String s) {
+    //     XMLService xmlService = new XMLService();
+    //     List<Category> categories = xmlService.parseCategory();
+    //     for (Category cat : categories) {
+    //         if (cat.getName().equals(s)) {
+    //             category = cat;
+    //         } else {
+    //             category = null;
+    //         }
+    //     }
+    // }
 
 //     public List<Category> getListOfCategories() {
 //         return listOfCategories;
@@ -42,4 +61,5 @@ public class MemberFinder {
 //     public void setListOfCategories(List<Category> list) {
 //         listOfCategories = list;
 //     }
-// }
+
+}
