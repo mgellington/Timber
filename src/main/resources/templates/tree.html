@@ -81,7 +81,7 @@
                         <h4>Search CAPEC library of known attack patterns</h4>
                         <p>Parent Attack: 
                             <select th:field="*{parent}">
-                                <option th:each="i : ${attacks}" th:value="${i}" th:text="${i}">
+                                <option th:each="i : ${suggestedAttacks}" th:value="${i}" th:text="${i}">
                                 </option>
                             </select>
                         </p>

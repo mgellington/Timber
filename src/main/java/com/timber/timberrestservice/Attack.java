@@ -6,18 +6,22 @@ import java.util.List;
 public class Attack {
     public int capecID;
     public String name;
-    public List<String> suggestedChildren;
+
+    public List<String> parentAttacks;
+    public List<String> childAttacks;
 
     public Attack (String name) {
         this.name = name;
         this.capecID = 0;
-        suggestedChildren = new ArrayList<String>();
+        parentAttacks = new ArrayList<String>();
+        childAttacks = new ArrayList<String>();
     }
 
     public Attack (String name, int capecID) {
         this.name = name;
         this.capecID = capecID;
-        suggestedChildren = new ArrayList<String>();
+        parentAttacks = new ArrayList<String>();
+        childAttacks = new ArrayList<String>();
     }
 
 
@@ -37,12 +41,20 @@ public class Attack {
         return capecID;
     }
 
-    public List<String> getSuggestedChildren() {
-        return suggestedChildren;
+    public List<String> getParentAttacks() {
+        return parentAttacks;
     }
 
-    public void addSuggestedChild(String child) {
-        suggestedChildren.add(child);
+    public void addParentAttacks(String parent) {
+        parentAttacks.add(parent);
+    }
+
+    public List<String> getChildAttacks() {
+        return childAttacks;
+    }
+
+    public void addChildAttacks(String child) {
+        childAttacks.add(child);
     }
 
 }

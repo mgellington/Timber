@@ -90,6 +90,18 @@ public class TreeController {
         allAttacks.remove(0); // removes "child" label
         model.addAttribute("attacks", allAttacks);
 
+        List<Attack> attacks = xmlService.parseAttacks();
+        List<String> suggestedAttacks = new ArrayList<String>();
+        for (Attack attack : attacks) {
+            if (attack.getName().equals(node.getChild())) {
+                for (String child : attack.getChildAttacks()) {
+                    suggestedAttacks.add(child);
+                }
+            }
+        }
+
+        model.addAttribute("suggestedAttacks", suggestedAttacks);
+
         return "tree";
     }
 
