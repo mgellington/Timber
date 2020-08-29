@@ -60,7 +60,7 @@ public class TreeController {
 
         // adds possible parent attacks
         List<String> allAttacks = new ArrayList<String>();
-        allAttacks.add("Select Parent Attack");
+        allAttacks.add("Select Attack");
         allAttacks.addAll(practiceTree.getChildren());
         allAttacks.remove(1); // removes "child" label
         model.addAttribute("attacks", allAttacks);
@@ -71,6 +71,9 @@ public class TreeController {
     @PostMapping("/tree")
     public String attackSubmit(@ModelAttribute StringNode node, Model model) {
         model.addAttribute("node", node);
+
+        // if string node (e.g. parent and no child) already exists
+        // delete original
         practiceTree.addStringNode(node);
 
         // adds CAPEC domains
@@ -85,22 +88,10 @@ public class TreeController {
 
         // adds possible parent attacks
         List<String> allAttacks = new ArrayList<String>();
-        allAttacks.add("Select Parent Attack");
+        allAttacks.add("Select Attack");
         allAttacks.addAll(practiceTree.getChildren());
         allAttacks.remove(1); // removes "child" label
         model.addAttribute("attacks", allAttacks);
-
-        // List<Attack> attacks = xmlService.parseAttacks();
-        // List<String> suggestedAttacks = new ArrayList<String>();
-        // for (Attack attack : attacks) {
-        //     if (attack.getName().equals(node.getChild())) {
-        //         for (String child : attack.getChildAttacks()) {
-        //             suggestedAttacks.add(child);
-        //         }
-        //     }
-        // }
-
-        // model.addAttribute("suggestedAttacks", suggestedAttacks);
 
         return "tree";
     }
