@@ -10,6 +10,13 @@ public class Attack {
     public List<String> parentAttacks;
     public List<String> childAttacks;
 
+    public String description;
+    public String likelihood;
+    public String severity;
+    public String mitigations;
+
+    
+
     public Attack (String name) {
         this.name = name;
         this.capecID = 0;
@@ -55,6 +62,54 @@ public class Attack {
 
     public void addChildAttacks(String child) {
         childAttacks.add(child);
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setDescription(String description) {
+        if (description == null) {
+            this.description = "";
+        } else {
+            this.description = description;
+        }
+    }
+
+    public String getLikelihood() {
+        return this.likelihood;
+    }
+
+    public void setLikelihood(String likelihood) {
+        if (likelihood == null) {
+            this.likelihood = "";
+        } else {
+            this.likelihood = likelihood;
+        }
+    }
+
+    public String getSeverity() {
+        return this.severity;
+    }
+
+    public void setSeverity(String severity) {
+        if (severity == null) {
+            this.severity = "";
+        } else {
+            this.severity = severity;
+        }
+    }
+
+    public String getMitigations() {
+        return this.mitigations;
+    }
+
+    public void setMitigations(String mitigations) {
+        if (mitigations == null) {
+            this.mitigations = "";
+        } else {
+            this.mitigations = mitigations;
+        }
     }
 
 }

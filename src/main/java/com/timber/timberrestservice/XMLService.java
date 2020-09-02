@@ -42,6 +42,31 @@ public class XMLService {
                         Integer.parseInt(elem.getAttribute("ID"))
                     );
 
+                    if (elem.getElementsByTagName("Description").getLength() > 0) {
+                        attack.setDescription(elem.getElementsByTagName("Description").item(0).getTextContent());
+                    } else {
+                        attack.setDescription("");
+                    }
+
+                    if (elem.getElementsByTagName("Likelihood_Of_Attack").getLength() > 0) {
+                        attack.setLikelihood(elem.getElementsByTagName("Likelihood_Of_Attack").item(0).getTextContent());
+                    } else {
+                        attack.setLikelihood("");
+                    }
+
+                    // if (elem.getElementsByTagName("Mitigation").getLength() > 0) {
+                    //     attack.setMitigations(elem.getElementsByTagName("").item(0).getTextContent());
+                    // } else {
+                    //     attack.setMitigations("");
+                    // }
+
+                    if (elem.getElementsByTagName("Typical_Severity").getLength() > 0) {
+                        attack.setSeverity(elem.getElementsByTagName("Typical_Severity").item(0).getTextContent());
+                    } else {
+                        attack.setSeverity("");
+                    }
+
+
                     NodeList relatedAttacks = elem.getElementsByTagName("Related_Attack_Pattern");
                     for (int j = 0; j < relatedAttacks.getLength(); j++) {
                         Node relatedNode = relatedAttacks.item(j);
@@ -67,6 +92,7 @@ public class XMLService {
             ex.printStackTrace();
         }
 
+        // changing attack ids to name
         for (Attack parent : attacks) {
             int pid = parent.getCapecID();
             for (Attack child : attacks) {

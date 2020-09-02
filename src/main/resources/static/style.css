@@ -22,9 +22,19 @@ h1 {
     margin: 0 10px;
 }
 
+h5 {
+    font-size: 15px;
+    margin: 2px;
+}
+
 h6 {
     font-size: 12px;
-    margin: 0 10px;
+    margin: 0px 10px;
+}
+
+p {
+    font-size: 10px;
+    margin: 1px;
 }
 
 /* Layout */
@@ -43,25 +53,36 @@ header {
 
 .editor {
     width: 850px;
-    height: 400px;
+    height: 500px;
     border: black solid 1px;
-    margin: 25px;
+    margin: 20px;
     background-color: black;
     /* margin: 100px auto; */
 }
 
-.info-box {
-    width: 700px;
-    height: 100px;
-    margin: 20px 100px;
+#container {
+    width: 350px;
+    height: 200px;
+    margin: 20px 10px;
+    border: black solid 1px;
+    background-color:black;
+    overflow: scroll;
+    font-size: 15px;
+}
+
+#info-box {
+    width: 350px;
+    height: 200px;
+    margin: 20px 10px;
     border: black solid 1px;
     background-color: black;
+    overflow: scroll;
     /* margin: 100px auto; */
 }
 
 .svg-container {
     width: 850px;
-    height: 350px;
+    height: 450px;
     background-color: black;
 }
 
@@ -82,18 +103,6 @@ header {
     display: inline-block;
     margin-left: 3px;
 }
-
-/* .capec-search-button {
-    background-color: white;
-    color: black;
-    padding: 16px 20px;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    position: fixed;
-    opacity: 0.8;
-    width: 280px;
-} */
 
 /* The popup form - hidden by default */
 .form-popup {

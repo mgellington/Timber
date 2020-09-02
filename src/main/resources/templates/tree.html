@@ -24,16 +24,28 @@
                         </div>
                     </div>
 
-                    <div class = "info-box">
-                        <h3>info</h3>
-                    </div>
+                    
                         
                 </div>
 
-                <!-- INFO BOX -->
+                
                 <div class = "column">
                     <div id = "container">
+                        
                     </div>
+
+                    <!-- INFO BOX -->
+                    <div id = "info-box">
+                        <h5>Attack Information</h5>
+                        <p id="id">CAPEC ID</p>
+                        <p id="name"> NAME</p>
+                        <p id="description">DESCRIPTION</p>
+                        <p id="likelihood">LIKELIHOOD OF ATTACK</p>
+                        <p id="severity">TYPICAL SEVERITY</p>
+                        <p id="more">For more information, go to: capec.mitre.org</p>
+                    </div>
+
+                    <button id = "get-info-button" type = "button" onclick="getInfo()">Click to get info for selected attack</button>
                 </div>
 
                 <div class = "column"></div>

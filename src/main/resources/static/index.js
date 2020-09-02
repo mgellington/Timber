@@ -1,5 +1,5 @@
 // D3 SVG GRAPH
-var svgWidth = 850, svgHeight = 400;
+var svgWidth = 850, svgHeight = 500;
 
 d3.json("http://localhost:8080/node", function(error, json) {
     if (error) return console.warn(error);
@@ -80,23 +80,16 @@ function createHierarchicalTree(links) {
     findChildren(links, rootNode);
 
     // Customize icons for tree
-    var tree = new TreeView(rootNode, "#container",{
-        leaf_icon: "<span>&#128441;</span>",
-        parent_icon: "<span>&#128449;</span>",
-        open_icon: "<span>&#9698;</span>",
-        close_icon: "<span>&#9654;</span>"
+    tree = new TreeView(rootNode, "#container",{
+        context_menu: undefined
     });
-
-    // var parent = findParent(tree);
 }
 
 
 
 function findChildren(links, rootNode) {
     var filteredArray = links.filter(([source, target]) => source === rootNode.toString());
-    console.log(filteredArray);
     var childArray = filteredArray.map(([source, target]) => `${target}`);
-    console.log(childArray);
     if (childArray.length > 0) {
         childArray.forEach((childString) => {
             var currentChild = new TreeNode(childString.toString());
@@ -145,6 +138,23 @@ function sendAjaxRequest() {
     
 };
 
+function updateInfoBox(node) {
+    $.getJSON("http://localhost:8080/attacks", function(data) {
+        $("#info-box").empty();
+        data.forEach(function(item, i) {
+            if (node.toString() == item.name) {
+                $("#info-box").append(`<h5>Attack Info</h5>`);
+                $("#info-box").append(`<p>CAPEC ID: ${item.capecID}</p>`);
+                $("#info-box").append(`<p>NAME: ${item.name}</p>`);
+                $("#info-box").append(`<p>DESCRIPTION: ${item.description}</p>`);
+                $("#info-box").append(`<p>LIKELIHOOD OF ATTACK: ${item.likelihood}</p>`);
+                $("#info-box").append(`<p>SEVERITY: ${item.severity}</p>`);
+                $("#info-box").append(`<p>For more information, go to capec.mitre.org/data/definitions/${item.capecID}.html</p>`);
+            }
+        })
+    })
+}
+
 // JQuery - uses sendAjaxRequest when changing category drop down
 $(document).ready(function() {
     // if parent list not empty, disable category button
@@ -160,10 +170,16 @@ $(document).ready(function() {
     $("#capec-parent").change(function() {
         sendAjaxRequest();
     });
+    
 });
 
 
-
+function getInfo() {
+    var nodes = tree.getSelectedNodes();
+    nodes.forEach(function(node, i) {
+        updateInfoBox(node);
+    });
+}
 
 function openForm() {
     document.getElementById("myForm").style.display = "block";
