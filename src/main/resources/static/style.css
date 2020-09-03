@@ -84,6 +84,7 @@ header {
     width: 850px;
     height: 450px;
     background-color: black;
+    overflow: scroll;
 }
 
 .button-container {

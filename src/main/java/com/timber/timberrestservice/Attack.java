@@ -15,6 +15,8 @@ public class Attack {
     public String severity;
     public String mitigations;
 
+    public boolean isLikely;
+
     
 
     public Attack (String name) {
@@ -80,12 +82,15 @@ public class Attack {
         return this.likelihood;
     }
 
+    
     public void setLikelihood(String likelihood) {
         if (likelihood == null) {
             this.likelihood = "";
         } else {
             this.likelihood = likelihood;
         }
+
+        setIsLikely();
     }
 
     public String getSeverity() {
@@ -110,6 +115,22 @@ public class Attack {
         } else {
             this.mitigations = mitigations;
         }
+    }
+
+    // Proof of Concept for Pathway Analysis
+    // High or Medium likelihood is considered likely
+    // Low is considered unlikely
+    public void setIsLikely() {
+        if (likelihood.equals("Low")) {
+            isLikely = false;
+        } else {
+            isLikely = true;
+        }
+
+    }
+
+    public boolean getIsLikely() {
+        return isLikely;
     }
 
 }

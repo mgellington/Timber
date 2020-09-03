@@ -3,23 +3,27 @@ var svgWidth = 850, svgHeight = 500;
 
 d3.json("http://localhost:8080/node", function(error, json) {
     if (error) return console.warn(error);
-    console.log(json);
 
     var csv = ConvertToCSV(json);
-    console.log(csv);
 
     var links = d3.csvParse(csv);
 
     // list of all attacks
     var labels = links.map(l => `${[l[links.columns[0]]]}`);
 
-    var svg = d3.select('svg')
-    .graphviz()
-        .renderDot(`digraph {
-            graph [bgcolor=black];
-            ${labelMaker(labels)}
-            ${replaceWithID(links, labels)}
-        }`);
+    d3.json("http://localhost:8080/attacks", function(error, attacks) {
+        if (error) return console.warn(error);
+
+        var svg = d3.select('svg')
+        .graphviz()
+            .renderDot(`digraph {
+                size=8;
+                graph [bgcolor=black];
+                ${labelMaker(labels, attacks)}
+                ${replaceWithID(links, labels)}
+            }`);
+    })
+    
 
 });
 
@@ -36,15 +40,40 @@ function replaceWithID(links, labels) {
         // .map(l => [l[links.columns[1]], l[links.columns[0]]])
         .filter(([source, target]) => source && target)
         .map(([source, target]) => [labels.indexOf(source), labels.indexOf(target)])
-        .map(([source, target]) => `${source} -> ${target} [color="limegreen"]`)
+        .map(([source, target]) => `${source} -> ${target} [color="white"]`)
         .join("; ");
 }
 
+
+
+function redGreenLabels(label, index, attacks) {
+
+    var newLabel = `${index} [label = "${label}" color="limegreen" fontcolor="limegreen"]`;
+
+    attacks.forEach(function(item, i) {
+        if (item.name === label) {
+            if(item.isLikely === false) {
+                newLabel = `${index} [label = "${label}" color="red" fontcolor="red"]`;
+            } else {
+                newLabel = `${index} [label = "${label}" color="limegreen" fontcolor="limegreen"]`;
+            }
+        }
+    });
+
+    console.log(newLabel);
+    return newLabel;
+
+
+}
+
 // Prepares array of labels to be used in Graphviz digraph
-function labelMaker(labels) {
+function labelMaker(labels, attacks) {
+
     return labels
-        .map((label, index) => `${index} [label = "${label}" color="limegreen" fontcolor="limegreen"]`)
+        .map((label, index) => redGreenLabels(label, index, attacks))
         .join("\n");
+
+
 }
 
 // Helper function for converting JSON to CSV
@@ -99,6 +128,8 @@ function findChildren(links, rootNode) {
     }
 
 }
+
+
 
 var domainSelected = true;
 
@@ -204,5 +235,3 @@ function openDeleteForm() {
 function closeDeleteForm() {
     document.getElementById("deleteForm").style.display = "none";
 }
-
-

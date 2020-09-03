@@ -1,6 +1,5 @@
 package com.timber.timberrestservice;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MemberFinder {

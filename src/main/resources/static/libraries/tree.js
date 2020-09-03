@@ -164,7 +164,7 @@ function TreeView(root, container, options){
 			if(node_cur.isEnabled()){
 				if(e.ctrlKey == false){
 					if(!node_cur.isLeaf()){
-						node_cur.toggleExpanded();
+						// node_cur.toggleExpanded();
 						self.reload();
 					}else{
 						node_cur.open();
