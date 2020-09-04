@@ -14,10 +14,7 @@ public class TemplateTree {
     public void buildList() {
 
         stringNodes = new ArrayList<StringNode>();
-        Attack child = new Attack("child");
-        Attack parent = new Attack("parent");
-        Node nullNode = new Node(child, parent);
-        stringNodes.add(new StringNode(nullNode));
+        stringNodes.add(new StringNode("child", "parent"));
     }
 
     public List<StringNode> getList() {

@@ -5,17 +5,6 @@ public class StringNode {
     public String child;
     public String parent;
 
-    public StringNode(Node node) {
-        this.child = node.getChild().getName();
-
-        if (node.getParent() != null) {
-            this.parent = node.getParent().getName();
-        } else {
-            this.parent = "";
-        }
-        
-    }
-
     public StringNode(String child, String parent) {
         this.parent = parent;
         this.child = child;

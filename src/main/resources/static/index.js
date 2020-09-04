@@ -17,6 +17,7 @@ d3.json("http://localhost:8080/node", function(error, json) {
         var svg = d3.select('svg')
         .graphviz()
             .renderDot(`digraph {
+                ranksep=2;
                 size=8;
                 graph [bgcolor=black];
                 ${labelMaker(labels, attacks)}

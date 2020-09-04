@@ -9,7 +9,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import java.io.File;
-// import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,11 +53,6 @@ public class XMLService {
                         attack.setLikelihood("");
                     }
 
-                    // if (elem.getElementsByTagName("Mitigation").getLength() > 0) {
-                    //     attack.setMitigations(elem.getElementsByTagName("").item(0).getTextContent());
-                    // } else {
-                    //     attack.setMitigations("");
-                    // }
 
                     if (elem.getElementsByTagName("Typical_Severity").getLength() > 0) {
                         attack.setSeverity(elem.getElementsByTagName("Typical_Severity").item(0).getTextContent());
