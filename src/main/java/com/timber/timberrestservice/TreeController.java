@@ -60,9 +60,9 @@ public class TreeController {
 
         // adds possible parent attacks
         List<String> allAttacks = new ArrayList<String>();
-        allAttacks.add("Select Attack");
+        // allAttacks.add("Select Attack");
         allAttacks.addAll(practiceTree.getChildren());
-        allAttacks.remove(1); // removes "child" label
+        allAttacks.remove(0); // removes "child" label
         model.addAttribute("attacks", allAttacks);
 
         return "tree";
@@ -88,9 +88,9 @@ public class TreeController {
 
         // adds possible parent attacks
         List<String> allAttacks = new ArrayList<String>();
-        allAttacks.add("Select Attack");
+        //allAttacks.add("Select Attack");
         allAttacks.addAll(practiceTree.getChildren());
-        allAttacks.remove(1); // removes "child" label
+        allAttacks.remove(0); // removes "child" label
         model.addAttribute("attacks", allAttacks);
 
         return "tree";

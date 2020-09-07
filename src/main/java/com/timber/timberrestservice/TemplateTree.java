@@ -81,15 +81,7 @@ public class TemplateTree {
         while (!finished) {
             for (int i = 0; i < originalLength; i++) {
                 for (StringNode node : stringNodes) {
-                    if (node.getChild().equals(remove.get(i).getParent())) {
-                        if (!(remove.contains(node))) {
-                            remove.add(node);
-                        }
-                    } else if (node.getParent().equals(remove.get(i).getParent())) {
-                        if (!(remove.contains(node))) {
-                            remove.add(node);
-                        }
-                    } else if (node.getChild().equals(remove.get(i).getChild())) {
+                    if (node.getChild().equals(remove.get(i).getChild())) {
                         if (!(remove.contains(node))) {
                             remove.add(node);
                         }

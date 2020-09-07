@@ -20,6 +20,7 @@ d3.json("http://localhost:8080/node", function(error, json) {
                 ranksep=1;
                 size=8;
                 graph [bgcolor=black];
+                node [fontname = "helvetica"];
                 ${labelMaker(labels, attacks)}
                 ${replaceWithID(links, labels)}
             }`);
@@ -49,19 +50,29 @@ function replaceWithID(links, labels) {
 
 function redGreenLabels(label, index, attacks) {
 
-    var newLabel = `${index} [label = "${label}" color="limegreen" fontcolor="limegreen"]`;
+    // DEFAULT COLOR = WHITE
+    var newLabel = `${index} [label = "${label}" color="white" fontcolor="white"]`;
 
     attacks.forEach(function(item, i) {
         if (item.name === label) {
-            if(item.isLikely === false) {
+
+            // HIGH LIKELIHOOD = RED
+            if(item.likelihood === "High") {
                 newLabel = `${index} [label = "${label}" color="red" fontcolor="red"]`;
-            } else {
+            }
+
+            // MEDIUM LIKELIHOOD = YELLOW
+            else if (item.likelihood === "Medium") {
+                newLabel = `${index} [label = "${label}" color="yellow" fontcolor="yellow"]`;
+            } 
+
+            // LOW LIKELIHOOD = GREEN
+            else if (item.likelihood === "Low") {
                 newLabel = `${index} [label = "${label}" color="limegreen" fontcolor="limegreen"]`;
             }
         }
     });
 
-    console.log(newLabel);
     return newLabel;
 
 
@@ -87,7 +98,8 @@ function ConvertToCSV(objArray) {
         for (var index in array[i]) {
             if (line != '') line += ','
 
-            line += array[i][index];
+            // ensures entire title is included if commas present 
+            line += "\"" + array[i][index] + "\"";
         }
 
         str += line + '\r\n';
@@ -109,7 +121,6 @@ function createHierarchicalTree(links) {
     var rootNode = new TreeNode(root + ""); 
     findChildren(links, rootNode);
 
-    // Customize icons for tree
     tree = new TreeView(rootNode, "#container",{
         context_menu: undefined
     });
@@ -240,4 +251,9 @@ function openDeleteForm() {
 
 function closeDeleteForm() {
     document.getElementById("deleteForm").style.display = "none";
+}
+
+function reloadPage() {
+    // waits for form to submit before reloading page
+    setTimeout(function(){window.location.reload();},100);
 }
