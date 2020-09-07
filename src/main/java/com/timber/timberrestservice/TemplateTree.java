@@ -45,9 +45,19 @@ public class TemplateTree {
         if (remove != null) {
             removeAttack(remove.getChild());
         } else {
+            boolean exists = false;
             if (!(sn.getParent().equals("Select Attack") 
             || sn.getChild().equals("Select Attack"))) {
-                stringNodes.add(sn);
+                for (StringNode node : stringNodes) {
+                    if (node.equals(sn)) {
+                        // do not add
+                        exists = true;
+                    }
+                }
+                if (!exists) {
+                    stringNodes.add(sn);
+                }
+                
             }
             
         }
@@ -62,8 +72,43 @@ public class TemplateTree {
                 remove.add(node);
             } else if (node.getParent().equals(attackName)) {
                 remove.add(node);
-            }
+            } 
         }
+
+        int originalLength = remove.size();
+        boolean finished = false;
+
+        while (!finished) {
+            for (int i = 0; i < originalLength; i++) {
+                for (StringNode node : stringNodes) {
+                    if (node.getChild().equals(remove.get(i).getParent())) {
+                        if (!(remove.contains(node))) {
+                            remove.add(node);
+                        }
+                    } else if (node.getParent().equals(remove.get(i).getParent())) {
+                        if (!(remove.contains(node))) {
+                            remove.add(node);
+                        }
+                    } else if (node.getChild().equals(remove.get(i).getChild())) {
+                        if (!(remove.contains(node))) {
+                            remove.add(node);
+                        }
+                    } else if (node.getParent().equals(remove.get(i).getChild())) {
+                        if (!(remove.contains(node))) {
+                            remove.add(node);
+                        }
+                    } 
+                }
+            }
+
+            if (remove.size() == originalLength) {
+                finished = true;
+            }
+
+            originalLength = remove.size();
+        }
+
+        
 
         for (StringNode node : remove) {
             stringNodes.remove(node);

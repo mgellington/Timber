@@ -15,6 +15,16 @@ public class StringNode {
         this.parent = "";
     }
 
+    public boolean equals(StringNode other) {
+        boolean isEqual = false;
+        if (other.getParent().equals(this.getParent())
+        && other.getChild().equals(this.getChild())) {
+            isEqual = true;
+        }
+
+        return isEqual;
+    }
+
 
     public String getParent() {
         return this.parent;

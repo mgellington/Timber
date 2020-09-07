@@ -17,7 +17,7 @@ d3.json("http://localhost:8080/node", function(error, json) {
         var svg = d3.select('svg')
         .graphviz()
             .renderDot(`digraph {
-                ranksep=2;
+                ranksep=1;
                 size=8;
                 graph [bgcolor=black];
                 ${labelMaker(labels, attacks)}
@@ -195,6 +195,11 @@ $(document).ready(function() {
     } else if ($("#capec-parent").children('option').length === 1) {
         $("#capec-parent").attr("disabled", true);
     }
+
+    if($("#custom-parent").children('option').length === 1) {
+        $("#custom-parent").attr("disabled", true);
+    }
+
     $("#category").change(function() {
         domainSelected = false;
         sendAjaxRequest();
