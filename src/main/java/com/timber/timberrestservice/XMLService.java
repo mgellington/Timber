@@ -12,11 +12,15 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-
+// Service for parsing the downloaded CAPEC XML file (3000.xml)
 public class XMLService {
+    List<Attack> attacks;
+    List<Category> categories;
 
+    // PARSES ATTACKS, RETURNS LIST OF ATTACKS WITH NECESSARY INFORMATION
     public List<Attack> parseAttacks() {
-        List<Attack> attacks = new ArrayList<>();
+
+        attacks = new ArrayList<>();
 
         try {
 
@@ -34,6 +38,7 @@ public class XMLService {
 
                 Node node = attackList.item(i);
 
+                // Get name and ID
                 if(node.getNodeType() == Node.ELEMENT_NODE) {
                     Element elem = (Element) node;
                     Attack attack = new Attack(
@@ -41,26 +46,28 @@ public class XMLService {
                         Integer.parseInt(elem.getAttribute("ID"))
                     );
 
+                    // Description
                     if (elem.getElementsByTagName("Description").getLength() > 0) {
                         attack.setDescription(elem.getElementsByTagName("Description").item(0).getTextContent());
                     } else {
                         attack.setDescription("");
                     }
 
+                    // Likelihood
                     if (elem.getElementsByTagName("Likelihood_Of_Attack").getLength() > 0) {
                         attack.setLikelihood(elem.getElementsByTagName("Likelihood_Of_Attack").item(0).getTextContent());
                     } else {
                         attack.setLikelihood("");
                     }
 
-
+                    // Severity
                     if (elem.getElementsByTagName("Typical_Severity").getLength() > 0) {
                         attack.setSeverity(elem.getElementsByTagName("Typical_Severity").item(0).getTextContent());
                     } else {
                         attack.setSeverity("");
                     }
 
-
+                    // Related attacks (list of children)
                     NodeList relatedAttacks = elem.getElementsByTagName("Related_Attack_Pattern");
                     for (int j = 0; j < relatedAttacks.getLength(); j++) {
                         Node relatedNode = relatedAttacks.item(j);
@@ -71,7 +78,7 @@ public class XMLService {
                                 attack.addParentAttacks(parentId);
                             }
                         }
-                         
+                            
                     }
 
 
@@ -86,7 +93,7 @@ public class XMLService {
             ex.printStackTrace();
         }
 
-        // changing attack ids to name
+        // Changes attack ids to name to allow searching and displaying
         for (Attack parent : attacks) {
             int pid = parent.getCapecID();
             for (Attack child : attacks) {
@@ -105,10 +112,12 @@ public class XMLService {
     }
 
 
+    // PARSES DOMAIN CATEGORIES, RETURNS LIST OF CATEGORIES (WITH CORRESPONDING META-ATTACKS)
     public List<Category> parseCategory() {
 
-        List<Category> categories = new ArrayList<>();
-        List<Attack> attacks = new ArrayList<>();
+        categories = new ArrayList<>();
+        attacks = parseAttacks();
+
 
         try {
 
@@ -129,6 +138,7 @@ public class XMLService {
 
                 Node node = categoryList.item(i);
 
+                // Gets name and ID
                 if(node.getNodeType() == Node.ELEMENT_NODE) {
                     Element elem = (Element) node;
                     Category category = new Category(
@@ -136,7 +146,7 @@ public class XMLService {
                             elem.getAttribute("Name")
                     );
 
-                    
+                    // Associates list of meta-attacks with each category
                     NodeList relationships = elem.getElementsByTagName("Relationships");
                     Element relationshipLine = (Element) relationships.item(0);
                     NodeList members = relationshipLine.getElementsByTagName("Has_Member");
@@ -154,40 +164,6 @@ public class XMLService {
 
                     categories.add(category);
                 }
-            }
-
-            NodeList attackList = doc.getElementsByTagName("Attack_Pattern");
-
-            //loop all available nodes
-            for (int i = 0; i < attackList.getLength(); i++) {
-
-                Node node = attackList.item(i);
-
-                if(node.getNodeType() == Node.ELEMENT_NODE) {
-                    Element elem = (Element) node;
-                    Attack attack = new Attack(
-                        elem.getAttribute("Name"),
-                        Integer.parseInt(elem.getAttribute("ID"))
-                    );
-
-                    NodeList relatedAttacks = elem.getElementsByTagName("Related_Attack_Pattern");
-                    for (int j = 0; j < relatedAttacks.getLength(); j++) {
-                        Node relatedNode = relatedAttacks.item(j);
-                        if(relatedNode.getNodeType() == Node.ELEMENT_NODE) {
-                            Element parent = (Element) relatedNode;
-                            if (parent.getAttribute("Nature").equals("ChildOf")) {
-                                String parentId = parent.getAttribute("CAPEC_ID");
-                                attack.addParentAttacks(parentId);
-                            }
-                        }
-                         
-                    }
-
-
-                    attacks.add(attack);
-                }
-
-                
             }
 
 

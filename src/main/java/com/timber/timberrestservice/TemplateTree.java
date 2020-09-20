@@ -3,24 +3,31 @@ package com.timber.timberrestservice;
 import java.util.ArrayList;
 import java.util.List;
 
+// This class stores the entire tree in a List of StringNodes
 public class TemplateTree {
 
     List<StringNode> stringNodes;
 
+    // CONSTRUCTOR
     public TemplateTree() {
         buildList();
     }
 
+
+    // The list must be built as a template containing a "blank" node ("child", "parent")
+    // This is necessary for building the tree using Graphviz's dot notation
     public void buildList() {
 
         stringNodes = new ArrayList<StringNode>();
         stringNodes.add(new StringNode("child", "parent"));
     }
 
+    // GETTERS
     public List<StringNode> getList() {
         return stringNodes;
     }
 
+    // Retrives list of all attacks in the tree
     public List<String> getChildren() {
         List<String> children = new ArrayList<String>();
         for (StringNode node : stringNodes) {
@@ -30,7 +37,10 @@ public class TemplateTree {
         return children;
     }
 
-    // add or delete string node
+    // This method is used to add or delete a node from the tree
+    // If the node is not on the tree, it is added
+    // If node is already on the tree, it is deleted (using removeAttack method)
+    // Could only use one method when adding a new node to tree from Controller
     public void addStringNode(StringNode sn) {
         StringNode remove = null;
         for (StringNode node : stringNodes) {
@@ -55,7 +65,10 @@ public class TemplateTree {
                     }
                 }
                 if (!exists) {
-                    stringNodes.add(sn);
+                    if ((stringNodes.size() > 1 && !(sn.getParent().equals(""))) || (stringNodes.size() == 1)) {
+                        stringNodes.add(sn);
+                    }
+                    
                 }
                 
             }
@@ -65,6 +78,9 @@ public class TemplateTree {
 
     }
 
+    // Method for removing an attack from the tree
+    // Removes selected node and all that nodes children
+    // This is to maintain the structural integrity of the tree
     public void removeAttack(String attackName) {
         List<StringNode> remove = new ArrayList<StringNode>();
         for (StringNode node : stringNodes) {

@@ -1,10 +1,14 @@
 package com.timber.timberrestservice;
 
+// This class stores information about individual nodes in the tree in the form of two strings
+// It defines the connection between a parent and child node
 public class StringNode {
 
     public String child;
     public String parent;
 
+
+    // CONSTRUCTORS
     public StringNode(String child, String parent) {
         this.parent = parent;
         this.child = child;
@@ -15,6 +19,9 @@ public class StringNode {
         this.parent = "";
     }
 
+
+    // Checks if two nodes are equal to each other
+    // (same parent and child Strings)
     public boolean equals(StringNode other) {
         boolean isEqual = false;
         if (other.getParent().equals(this.getParent())
@@ -25,7 +32,7 @@ public class StringNode {
         return isEqual;
     }
 
-
+    // GETTERS AND SETTERS
     public String getParent() {
         return this.parent;
     }

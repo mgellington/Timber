@@ -3,29 +3,20 @@ package com.timber.timberrestservice;
 import java.util.ArrayList;
 import java.util.List;
 
+// Stores information about CAPEC attacks
 public class Attack {
     public int capecID;
     public String name;
 
+    // These lists contain the parent of and children of this attack
     public List<String> parentAttacks;
     public List<String> childAttacks;
 
     public String description;
     public String likelihood;
     public String severity;
-    public String mitigations;
 
-    public boolean isLikely;
-
-    
-
-    public Attack (String name) {
-        this.name = name;
-        this.capecID = 0;
-        parentAttacks = new ArrayList<String>();
-        childAttacks = new ArrayList<String>();
-    }
-
+    // CONSTRUCTOR
     public Attack (String name, int capecID) {
         this.name = name;
         this.capecID = capecID;
@@ -37,6 +28,9 @@ public class Attack {
     public String toString() {
         return name;
     }
+
+
+    // GETTERS AND SETTERS
 
     public String getName() {
         return name;
@@ -90,7 +84,6 @@ public class Attack {
             this.likelihood = likelihood;
         }
 
-        setIsLikely();
     }
 
     public String getSeverity() {
@@ -103,34 +96,6 @@ public class Attack {
         } else {
             this.severity = severity;
         }
-    }
-
-    public String getMitigations() {
-        return this.mitigations;
-    }
-
-    public void setMitigations(String mitigations) {
-        if (mitigations == null) {
-            this.mitigations = "";
-        } else {
-            this.mitigations = mitigations;
-        }
-    }
-
-    // Proof of Concept for Pathway Analysis
-    // High or Medium likelihood is considered likely
-    // Low is considered unlikely
-    public void setIsLikely() {
-        if (likelihood.equals("Low")) {
-            isLikely = false;
-        } else {
-            isLikely = true;
-        }
-
-    }
-
-    public boolean getIsLikely() {
-        return isLikely;
     }
 
 }

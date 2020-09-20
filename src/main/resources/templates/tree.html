@@ -17,6 +17,8 @@
                 <div class = "column">
                     <div class = "editor">
                         <svg class = svg-container></svg>
+
+                        <!-- BUTTONS -->
                         <div id = "button-container">
                             <button class = "add-attack-button" type = "button" onclick="openForm()">Add custom attack</button>
                             <button class="capec-search-button" type = "button" onclick="openCapecForm()">Add attack from CAPEC attack patterns</button>
@@ -28,7 +30,7 @@
                         
                 </div>
 
-                
+                <!-- CONTAINER FOR TREEJS HIERARCHY -->
                 <div class = "column">
                     <div id = "container">
                         
@@ -119,6 +121,7 @@
 
             </main>
 
+            <!-- SCRIPTS -->
             <script src = "http://d3js.org/d3.v4.min.js"></script>
             <script src="https://unpkg.com/@hpcc-js/wasm@0.3.11/dist/index.min.js"></script>
             <script src="https://unpkg.com/d3-graphviz@3.0.5/build/d3-graphviz.js"></script>

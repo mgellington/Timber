@@ -1,19 +1,22 @@
 // D3 SVG GRAPH
 var svgWidth = 850, svgHeight = 500;
 
+// Loads tree from JSON at /node
 d3.json("http://localhost:8080/node", function(error, json) {
     if (error) return console.warn(error);
 
-    var csv = ConvertToCSV(json);
-
+    // Converts JSON to CSV and parses
+    var csv = csvConverter(json);
     var links = d3.csvParse(csv);
 
     // list of all attacks
     var labels = links.map(l => `${[l[links.columns[0]]]}`);
 
+    // Loads list of CAPEC attacks so likelihood can be accounted for
     d3.json("http://localhost:8080/attacks", function(error, attacks) {
         if (error) return console.warn(error);
 
+        // Renders Tree as SVG using GRAPHVIZ
         var svg = d3.select('svg')
         .graphviz()
             .renderDot(`digraph {
@@ -39,7 +42,6 @@ function replaceWithID(links, labels) {
 
 
     return newLinks
-        // .map(l => [l[links.columns[1]], l[links.columns[0]]])
         .filter(([source, target]) => source && target)
         .map(([source, target]) => [labels.indexOf(source), labels.indexOf(target)])
         .map(([source, target]) => `${source} -> ${target} [color="white"]`)
@@ -48,7 +50,7 @@ function replaceWithID(links, labels) {
 
 
 
-function redGreenLabels(label, index, attacks) {
+function colorLabels(label, index, attacks) {
 
     // DEFAULT COLOR = WHITE
     var newLabel = `${index} [label = "${label}" color="white" fontcolor="white"]`;
@@ -82,14 +84,14 @@ function redGreenLabels(label, index, attacks) {
 function labelMaker(labels, attacks) {
 
     return labels
-        .map((label, index) => redGreenLabels(label, index, attacks))
+        .map((label, index) => colorLabels(label, index, attacks))
         .join("\n");
 
 
 }
 
 // Helper function for converting JSON to CSV
-function ConvertToCSV(objArray) {
+function csvConverter(objArray) {
     var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
     var str = '';
 
@@ -98,7 +100,7 @@ function ConvertToCSV(objArray) {
         for (var index in array[i]) {
             if (line != '') line += ','
 
-            // ensures entire title is included if commas present 
+            // ensures entire title is included if commas present in attack name
             line += "\"" + array[i][index] + "\"";
         }
 
@@ -111,8 +113,7 @@ function ConvertToCSV(objArray) {
 
 
 
-// Hierarchical Tree
-
+// Hierarchical Tree (TreeJS)
 function createHierarchicalTree(links) {
     var rootObject = links.filter(([source, target]) => !source && target);
     var root = rootObject.map(([source, target]) => {
@@ -127,7 +128,7 @@ function createHierarchicalTree(links) {
 }
 
 
-
+// Uses list of attacks to recursively add child nodes to parent in hierarchical tree
 function findChildren(links, rootNode) {
     var filteredArray = links.filter(([source, target]) => source === rootNode.toString());
     var childArray = filteredArray.map(([source, target]) => `${target}`);
@@ -141,13 +142,13 @@ function findChildren(links, rootNode) {
 
 }
 
-
-
 var domainSelected = true;
 
 
-// AJAX REQUEST - CATEGORY/MEMBER DROP DOWNS
+// AJAX REQUESTS - CATEGORY/ATTACK DROP DOWNS
 function sendAjaxRequest() {
+
+    // Supplies list of members based on category selected to drop down list
     if (!domainSelected) {
         var category = $("#category").val();
         $.getJSON("http://localhost:8080/members", function(data) {
@@ -163,6 +164,8 @@ function sendAjaxRequest() {
                 
             });
         });
+
+    // Supplies list of suggested children based on category selected to drop down list
     } else {
         var parent = $("#capec-parent").val();
         $.getJSON("http://localhost:8080/attacks", function(data) {
@@ -181,6 +184,7 @@ function sendAjaxRequest() {
     
 };
 
+// Updates information box from node selected in hierarchical tree on button press
 function updateInfoBox(node) {
     $.getJSON("http://localhost:8080/attacks", function(data) {
         $("#info-box").empty();
@@ -198,11 +202,29 @@ function updateInfoBox(node) {
     })
 }
 
-// JQuery - uses sendAjaxRequest when changing category drop down
+// JQuery - uses sendAjaxRequest when changing drop downs
 $(document).ready(function() {
-    // if parent list not empty, disable category button
+
+    // if parent list not empty, adds list of parents to array
     if ($("#capec-parent").children('option').length > 1) {
-        $("#category").attr("disabled", true);
+        const currentAttacks = [];
+        $.each($("#capec-parent").children('option'), function(){
+            currentAttacks.push($(this).val());
+        });
+
+        // if any attacks already from CAPEC list, disable Domain drop down
+        $.getJSON("http://localhost:8080/attacks", function(data) {
+            data.forEach(function(item, i) {
+                Array.from(currentAttacks).forEach(function(attack, a) {
+                    if (item.name == attack) {
+                        $("#category").attr("disabled", true);
+                        return false;
+                    }
+                });
+            });
+        });
+        
+    // There are actually no available parents--disables ability to choose parents
     } else if ($("#capec-parent").children('option').length === 1) {
         $("#capec-parent").attr("disabled", true);
     }
@@ -211,16 +233,21 @@ $(document).ready(function() {
         $("#custom-parent").attr("disabled", true);
     }
 
+    // Sends ajax request if domain selection is changed
     $("#category").change(function() {
         domainSelected = false;
         sendAjaxRequest();
     });
+
+    // Sends ajax request if CAPEC parent selection is changed
     $("#capec-parent").change(function() {
         sendAjaxRequest();
     });
     
 });
 
+
+// BUTTON EVENTS
 
 function getInfo() {
     var nodes = tree.getSelectedNodes();

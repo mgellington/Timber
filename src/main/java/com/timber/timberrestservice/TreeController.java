@@ -13,18 +13,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class TreeController {
 
-    // chooses which tree to load based on which button pressed on landing screen
+    // The three types of data controlled by this class (the tree, the list of categories, the list of CAPEC attacks)
     private TemplateTree practiceTree = new TemplateTree();
     private List<Category> listOfCategories = new ArrayList<Category>();
     private List<Attack> listOfAttacks = new ArrayList<Attack>();
 
-
+    // Displays tree (list of string nodes) as a JSON
     @GetMapping("/node")
     public @ResponseBody List<StringNode> listNodes() {
         return practiceTree.getList();
         
     }
 
+    // Displays list of CAPEC attacks as a JSON
     @GetMapping("/attacks")
     public @ResponseBody List<Attack> listAttacks() {
         XMLService xmlService = new XMLService();
@@ -33,6 +34,7 @@ public class TreeController {
         return listOfAttacks;
     }
 
+    // Displays list of Domain categories as a JSON
     @GetMapping("/members")
     public @ResponseBody List<Category> listMembers() {
         XMLService xmlService = new XMLService();
@@ -41,7 +43,8 @@ public class TreeController {
         return listOfCategories;
     }
 
-
+    // Displays options on "add attack" and "delete attack" forms
+    // Retrieves information to create new StringNode or delete current attack
     @GetMapping("/tree")
     public String attackForm(Model model) {
         model.addAttribute("node", new StringNode());
@@ -60,7 +63,6 @@ public class TreeController {
 
         // adds possible parent attacks
         List<String> allAttacks = new ArrayList<String>();
-        // allAttacks.add("Select Attack");
         allAttacks.addAll(practiceTree.getChildren());
         allAttacks.remove(0); // removes "child" label
         model.addAttribute("attacks", allAttacks);
@@ -68,6 +70,8 @@ public class TreeController {
         return "tree";
     }
 
+    // Displays options on "add attack" and "delete attack" forms
+    // Adds string node (retrieved by get method) to tree to be displayed in the editor
     @PostMapping("/tree")
     public String attackSubmit(@ModelAttribute StringNode node, Model model) {
         model.addAttribute("node", node);
